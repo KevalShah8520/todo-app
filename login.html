@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login - Todo App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="login-page">
+    <div class="login-container">
+      <div class="visual">
+        <!-- simple SVG Todo image -->
+        <div class="visual-inner">
+          <svg width="220" height="220" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <rect x="1" y="3" width="22" height="18" rx="2" fill="url(#g)" />
+            <path d="M7 9.5L10 12.5L17 6" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M7 15H17" stroke="rgba(255,255,255,0.82)" stroke-width="1.2" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="g" x1="0" x2="1">
+                <stop offset="0" stop-color="#ff9a76"/>
+                <stop offset="1" stop-color="#ff6b5f"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <h2>Welcome back</h2>
+          <p>Sign in to access your Todo list.</p>
+        </div>
+      </div>
+
+      <div class="form-wrap">
+        <form id="loginForm" class="login-form" novalidate>
+          <h1>Login</h1>
+
+          <div class="field">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" placeholder="Enter username" />
+            <div class="error" id="errUser"></div>
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="pw-wrap">
+              <input id="password" name="password" type="password" placeholder="Enter password" aria-describedby="pwHelp" />
+              <button type="button" class="eye" id="togglePw" aria-label="Toggle password visibility">👁️</button>
+            </div>
+            <div class="error" id="errPw"></div>
+            <div class="pw-help" id="pwHelp">Min 7 chars, include uppercase, lowercase, number and special character.</div>
+          </div>
+
+          <div class="form-actions">
+            <button id="loginBtn" type="submit" class="btn primary">Login</button>
+            <button id="clearBtn" type="button" class="btn">Clear</button>
+          </div>
+
+          <div class="demo-creds">
+            <strong>Demo credentials</strong>
+            <div>Username: <span class="mono">demo@todo.test</span></div>
+            <div>Password: <span class="mono">Demo@123</span></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>

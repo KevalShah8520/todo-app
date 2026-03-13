@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Todo App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>Todo List</h1>
+      <div class="header-controls">
+        <label class="theme-toggle" title="Toggle dark / light">
+          <input id="themeToggle" type="checkbox" />
+          <span class="slider"></span>
+        </label>
+        <div class="tabs">
+          <button id="tabActive" class="tab active">Active</button>
+          <button id="tabArchive" class="tab">Archive</button>
+        </div>
+        <button id="logoutBtn" class="btn" title="Logout">Logout</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <aside class="sidebar">
+        <form id="taskForm" class="task-form">
+          <h2 id="formTitle">New Task</h2>
+          <div class="field">
+            <label>Title <span class="req">*</span></label>
+            <input id="title" type="text" maxlength="100" required />
+            <div class="error" id="errTitle"></div>
+          </div>
+
+          <div class="field">
+            <label>Description</label>
+            <textarea id="description" maxlength="1000" rows="3"></textarea>
+            <div class="error" id="errDesc"></div>
+          </div>
+
+          <div class="field">
+            <label>Due Date <span class="req">*</span></label>
+            <input id="dueDate" type="datetime-local" required />
+            <div class="error" id="errDue"></div>
+          </div>
+
+          <div class="field">
+            <label>Status</label>
+            <select id="status">
+              <option value="TODO">TODO</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button id="saveBtn" type="submit" class="btn primary">Add Task</button>
+            <button id="resetBtn" type="button" class="btn">Reset</button>
+          </div>
+        </form>
+
+        <div class="filters">
+          <h3>Filters</h3>
+          <div class="field">
+            <label>Status</label>
+            <select id="filterStatus">
+              <option value="ALL">All</option>
+              <option value="TODO">TODO</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Filter Date</label>
+            <input id="filterDate" type="date" />
+          </div>
+          <!-- Group-by-date removed per design update -->
+          <div class="field export">
+            <label>Export</label>
+            <select id="exportFormat">
+              <option value="json">JSON</option>
+              <option value="csv">CSV</option>
+            </select>
+            <button id="exportBtn" class="btn">Download</button>
+          </div>
+        </div>
+      </aside>
+
+      <section class="content">
+        <div id="listContainer" class="list-container"></div>
+        <div id="emptyState" class="empty">No tasks yet — add one from the left.</div>
+      </section>
+    </main>
+
+    <footer class="app-footer">Built with HTML, CSS &amp; Vanilla JS • LocalStorage</footer>
+  </div>
+
+  <!-- Edit Panel (separate from creation form) -->
+  <aside id="editPanel" class="edit-panel hidden" aria-hidden="true">
+    <form id="editForm" class="task-form edit-form">
+      <h2>Edit Task</h2>
+      <div class="field">
+        <label>Title <span class="req">*</span></label>
+        <input id="editTitle" type="text" maxlength="100" required />
+        <div class="error" id="errEditTitle"></div>
+      </div>
+
+      <div class="field">
+        <label>Description</label>
+        <textarea id="editDescription" maxlength="1000" rows="3"></textarea>
+        <div class="error" id="errEditDesc"></div>
+      </div>
+
+      <div class="field">
+        <label>Due Date <span class="req">*</span></label>
+        <input id="editDueDate" type="datetime-local" required />
+        <div class="error" id="errEditDue"></div>
+      </div>
+
+      <div class="field">
+        <label>Created Date</label>
+        <input id="editCreatedAt" type="datetime-local" />
+      </div>
+
+      <div class="field">
+        <label>Status</label>
+        <select id="editStatus">
+          <option value="TODO">TODO</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>/
+
+      <div class="form-actions">
+        <button id="editSaveBtn" type="submit" class="btn primary">Save</button>
+        <button id="editDiscardBtn" type="button" class="btn">Discard</button>
+      </div>
+    </form>
+  </aside>
+  <script src="script.js"></script>
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+</body>
+</html>
