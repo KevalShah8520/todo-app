@@ -1,6 +1,9 @@
 <!-- Workspace Copilot instructions - generated from init.prompt.md -->
-# Copilot Instructions for todo-app
+description: This file provides instructions for using Copilot / AI assistants effectively in the todo-app repository.
+applyTo: **/*.html, **/*.js, **/*.css
+---
 
+# Copilot Instructions for todo-app
 Purpose
 -------
 Provide concise guidance so Copilot / AI assistants can be productive in this small static frontend repo.

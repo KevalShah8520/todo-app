@@ -140,5 +140,18 @@
   </aside>
   <script src="script.js"></script>
   <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Themed confirmation dialog (used for delete / archive confirmations) -->
+  <div id="confirmDialog" class="confirm-dialog hidden" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="confirm-backdrop" id="confirmBackdrop"></div>
+    <div class="confirm-panel" role="document" aria-labelledby="confirmTitle">
+      <h3 id="confirmTitle">Confirm</h3>
+      <p id="confirmMessage">Are you sure?</p>
+      <div class="confirm-actions">
+        <button id="confirmCancel" class="btn">Cancel</button>
+        <button id="confirmOk" class="btn primary">Confirm</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

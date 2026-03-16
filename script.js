@@ -204,12 +204,22 @@ if(window.document){
 }
 
 function removeTask(id){
-  if(!confirm('Delete task permanently?')) return;
-  tasks = tasks.filter(t=>t.id!==id); save(); render();
+  showConfirm('Delete task permanently?', 'Delete').then(ok=>{
+    if(!ok) return;
+    tasks = tasks.filter(t=>t.id!==id); save(); render();
+    showToast('success','Task deleted');
+  });
 }
 
 function toggleArchive(id){
-  const t = tasks.find(x=>x.id===id); if(!t) return; t.archived = !t.archived; save(); render();
+  const t = tasks.find(x=>x.id===id); if(!t) return;
+  const willArchive = !t.archived;
+  const verb = willArchive ? 'Archive' : 'Unarchive';
+  showConfirm(`${verb} this task?`, verb).then(ok=>{
+    if(!ok) return;
+    t.archived = willArchive; save(); render();
+    showToast('success', willArchive ? 'Task archived' : 'Task restored');
+  });
 }
 
 function cycleStatus(id){
@@ -263,6 +273,43 @@ function logout(){
 }
 
 // Helpers
+// Show a themed confirmation dialog. Falls back to native confirm when dialog not present.
+function showConfirm(message, title='Confirm'){
+  return new Promise(resolve=>{
+    try{
+      const dlg = document.getElementById('confirmDialog');
+      const msg = document.getElementById('confirmMessage');
+      const ttl = document.getElementById('confirmTitle');
+      const ok = document.getElementById('confirmOk');
+      const cancel = document.getElementById('confirmCancel');
+      const backdrop = document.getElementById('confirmBackdrop');
+      if(!dlg || !ok || !cancel || !msg || !ttl){ resolve(window.confirm(message)); return; }
+      ttl.textContent = title || 'Confirm';
+      msg.textContent = message || '';
+      dlg.classList.remove('hidden'); dlg.setAttribute('aria-hidden','false');
+      // focus ok button
+      ok.focus();
+
+      let cleaned = false;
+      const cleanup = (val)=>{
+        if(cleaned) return; cleaned = true;
+        dlg.classList.add('hidden'); dlg.setAttribute('aria-hidden','true');
+        ok.removeEventListener('click', onOk); cancel.removeEventListener('click', onCancel); backdrop.removeEventListener('click', onCancel); document.removeEventListener('keydown', onKey);
+        resolve(Boolean(val));
+      };
+
+      const onOk = ()=>cleanup(true);
+      const onCancel = ()=>cleanup(false);
+      const onKey = (e)=>{ if(e.key === 'Escape') cleanup(false); if(e.key === 'Enter') cleanup(true); };
+
+      ok.addEventListener('click', onOk);
+      cancel.addEventListener('click', onCancel);
+      backdrop.addEventListener('click', onCancel);
+      document.addEventListener('keydown', onKey);
+    }catch(e){ resolve(window.confirm(message)); }
+  });
+}
+
 function init(){
   load();
   // bind events
