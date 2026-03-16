@@ -7,6 +7,10 @@
   const errPw = document.getElementById('errPw');
   const toggle = document.getElementById('togglePw');
   const clearBtn = document.getElementById('clearBtn');
+  const themeToggle = document.getElementById('themeToggle');
+  const rememberChk = document.getElementById('rememberMe');
+  const THEME_KEY = 'todo.theme.v1';
+  const REMEMBER_KEY = 'todo.remember.user';
 
   const pwRegex = /^(?=.{7,})(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).*$/;
 
@@ -17,6 +21,24 @@
     else { pw.type = 'password'; toggle.textContent = '👁️'; }
     pw.focus();
   });
+
+  // Initialize theme toggle and apply saved theme
+  try{
+    const savedTheme = localStorage.getItem(THEME_KEY) || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    if(themeToggle) themeToggle.checked = (savedTheme === 'dark');
+    if(themeToggle) themeToggle.addEventListener('change', ()=>{
+      const t = themeToggle.checked ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+      localStorage.setItem(THEME_KEY, t);
+    });
+  }catch(e){/* ignore storage errors */}
+
+  // Initialize 'remember me' if present
+  try{
+    const savedUser = localStorage.getItem(REMEMBER_KEY);
+    if(savedUser && user) { user.value = savedUser; if(rememberChk) rememberChk.checked = true; }
+  }catch(e){}
 
   clearBtn.addEventListener('click', ()=>{
     form.reset(); showError(errUser,''); showError(errPw,''); pw.type='password'; toggle.textContent='👁️';
@@ -42,6 +64,11 @@
     if (u === demoUser && p === demoPw) {
       // set a short-lived session flag and redirect to todo list (index.html)
       try{ sessionStorage.setItem('todo.auth','1'); }catch(e){}
+      // persist remembered username if requested
+      try{
+        if(rememberChk && rememberChk.checked){ localStorage.setItem(REMEMBER_KEY, u); }
+        else { localStorage.removeItem(REMEMBER_KEY); }
+      }catch(e){}
       window.location.href = 'index.html';
     } else {
       showError(errPw, 'Invalid username or password');

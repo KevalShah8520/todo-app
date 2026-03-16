@@ -7,6 +7,13 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="top-controls" style="position:fixed;right:18px;top:10px;z-index:120">
+    <label class="theme-toggle" title="Toggle dark / light">
+      <input id="themeToggle" type="checkbox" />
+      <span class="slider"></span>
+    </label>
+  </div>
+
   <div class="login-page">
     <div class="login-container">
       <div class="visual">
@@ -46,6 +53,10 @@
             </div>
             <div class="error" id="errPw"></div>
             <div class="pw-help" id="pwHelp">Min 7 chars, include uppercase, lowercase, number and special character.</div>
+          </div>
+
+          <div class="field remember">
+            <label class="remember-label"><input id="rememberMe" type="checkbox" /> Remember me</label>
           </div>
 
           <div class="form-actions">

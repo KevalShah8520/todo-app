@@ -121,6 +121,12 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helveti
 .pw-wrap{display:flex;align-items:center;gap:8px}
 .pw-wrap input{flex:1}
 .eye{background:transparent;border:0;cursor:pointer;font-size:16px;padding:6px}
+
+/* Remember-me checkbox and label styling */
+.remember{margin-top:8px}
+.remember-label{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--text);cursor:pointer}
+.remember-label input[type="checkbox"]{width:16px;height:16px;margin:0;padding:0;accent-color:var(--accent)}
+[data-theme="dark"] .remember-label{color:var(--text)}
 .pw-help{font-size:12px;color:var(--muted);margin-top:6px}
 .demo-creds{margin-top:14px;font-size:13px;color:var(--muted)}
 .demo-creds .mono{font-family:monospace;background:rgba(0,0,0,0.04);padding:2px 6px;border-radius:4px}
@@ -135,6 +141,11 @@ body{margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,'Helveti
   .visual{padding:20px}
   .field.export > select, .field.export > button{width:100%}
 }
+
+/* Dark-theme tweaks for login visibility */
+[data-theme="dark"] .visual{background:linear-gradient(135deg,#0b2b3a,#0f3b4a)}
+[data-theme="dark"] .demo-creds .mono{background:rgba(255,255,255,0.06);color:var(--text)}
+.eye{color:var(--text)}
 
 /* Toast notifications */
 .toast-container{position:fixed;right:20px;bottom:20px;display:flex;flex-direction:column;gap:10px;z-index:2000}
